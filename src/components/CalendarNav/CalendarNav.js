@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 
+import './CalendarNav.css'
+
 const propTypes = {
     monthTitle: PropTypes.string,
     onPrevMonth: PropTypes.func,
