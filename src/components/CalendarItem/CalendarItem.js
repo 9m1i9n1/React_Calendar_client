@@ -20,10 +20,18 @@ const defaultProps = {
 class CalendarItem extends Component {
 
     render() {
+        const {dayNum, onAddReminder} = this.props
+
+        const inDay = (
+            <button>
+                +
+            </button>
+        )
+
         return (
             <div className = 'day'>
-                <button>+</button>
-                {this.props.dayNum}
+                <p>{dayNum}</p>
+                {dayNum !== '' ? inDay : null}
             </div>
         );
     }

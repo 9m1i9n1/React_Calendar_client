@@ -29,7 +29,7 @@ class CalendarList extends Component {
                 return <CalendarItem
                             key = {v.id}
                             dayNum = {v.dayNum}
-                            todos = {v.todos}
+                            reminder = {v.todos}
                         />
             })
         }

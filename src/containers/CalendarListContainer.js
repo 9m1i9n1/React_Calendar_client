@@ -25,7 +25,6 @@ class CalendarListContainer extends Component {
         for(let i = 0; i < firstDay; i++) {
             days.push(
                 {
-                    id: uniqueId(),
                     dayNum: '',
                 }
             )
@@ -34,8 +33,10 @@ class CalendarListContainer extends Component {
         for(let i = 1; i <= dayInMonth; i++) {
             days.push(
                 {
-                    id: uniqueId(),
+                    year: year,
+                    month: month,
                     dayNum: i,
+                    reminder: []
                 }
             )
         }
@@ -53,7 +54,7 @@ class CalendarListContainer extends Component {
     }
 
     handleRemoveReminder = () => {
-        
+
     }
 
     render() {
@@ -62,7 +63,7 @@ class CalendarListContainer extends Component {
             <div>
             <CalendarList 
                 days = {this.createDay()}
-                todos = {this.createTodo()}
+                // todos = {this.createTodo()}
             />
             </div>
             </div>
