@@ -1,9 +1,8 @@
-import { connect } from 'react-redux'
-
-import * as calendarActions from '../modules/calendar'
-import CalendarList from '../components/CalendarList';
-
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import uniqueId from 'uuid/v1'
+
+import CalendarList from '../components/CalendarList';
 
 class CalendarListContainer extends Component {
     
@@ -26,6 +25,7 @@ class CalendarListContainer extends Component {
         for(let i = 0; i < firstDay; i++) {
             days.push(
                 {
+                    id: uniqueId(),
                     dayNum: '',
                 }
             )
@@ -34,6 +34,7 @@ class CalendarListContainer extends Component {
         for(let i = 1; i <= dayInMonth; i++) {
             days.push(
                 {
+                    id: uniqueId(),
                     dayNum: i,
                 }
             )
@@ -42,12 +43,26 @@ class CalendarListContainer extends Component {
         return days;
     }
 
+    //TODO *********************
+    handleAddReminder = () => {
+
+    }
+
+    handleUpdateReminder = () => {
+        
+    }
+
+    handleRemoveReminder = () => {
+        
+    }
+
     render() {
         return (
             <div>
             <div>
             <CalendarList 
                 days = {this.createDay()}
+                todos = {this.createTodo()}
             />
             </div>
             </div>

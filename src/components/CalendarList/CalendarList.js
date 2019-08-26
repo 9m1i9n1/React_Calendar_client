@@ -27,8 +27,9 @@ class CalendarList extends Component {
         const mapToComponent = (data) => {
             return data.map((v, k) => {
                 return <CalendarItem
-                            key = {k}
+                            key = {v.id}
                             dayNum = {v.dayNum}
+                            todos = {v.todos}
                         />
             })
         }

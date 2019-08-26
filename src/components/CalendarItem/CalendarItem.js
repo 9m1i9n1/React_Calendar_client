@@ -22,6 +22,7 @@ class CalendarItem extends Component {
     render() {
         return (
             <div className = 'day'>
+                <button>+</button>
                 {this.props.dayNum}
             </div>
         );
