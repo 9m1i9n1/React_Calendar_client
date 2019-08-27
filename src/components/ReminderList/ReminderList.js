@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import TodoItem from '../ReminderItem';
+import ReminderItem from '../ReminderItem';
+import ReminderForm from '../ReminderForm';
 
 const propTypes = {
-    reminders: PropTypes.object,
+    // reminders: PropTypes.object,
 }
 
 function createError(funcName) {
@@ -16,14 +17,30 @@ const defaultProps = {
     reminders: createError('reminders'),
 }
 
-class TodoList extends Component {
+class ReminderList extends Component {
+    state = {
+        text: '',
+        reminders: [
+            // {
+            //     discription: '안녕하세요'
+            // },
+        ]
+    }
+
     render() {
-        const {reminders} = this.props
+        const { setEdit } = this.props
+
+        const reminderForm = () => {
+            console.log('#in reminderForm func');
+            
+            return <ReminderForm />
+        }
 
         const mapToComponent = (data) => {
             return data.map((v, k) => {
-                return <TodoItem 
-                    text = {v.text}
+                return <ReminderItem 
+                    key = {k}
+                    discription = {v.discription}
                     // onUpdate = {}
                     // onDelete = {}
                 />
@@ -31,13 +48,14 @@ class TodoList extends Component {
         }
         return (
             <div>
-                {mapToComponent(reminders)}
+                {(setEdit === true)
+                ? reminderForm() : mapToComponent(this.state.reminders)}
             </div>
         );
     }
 }
 
-TodoList.propTypes = propTypes;
-TodoList.defaultProps = defaultProps;
+ReminderList.propTypes = propTypes;
+ReminderList.defaultProps = defaultProps;
 
-export default TodoList;
+export default ReminderList;

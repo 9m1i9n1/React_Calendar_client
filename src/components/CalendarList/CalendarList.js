@@ -22,15 +22,17 @@ const defaultProps = {
 class CalendarList extends Component {
 
     render() {
-        const {days, onChange} = this.props
+        const {days, onSetDay} = this.props
 
         const mapToComponent = (data) => {
             return data.map((v, k) => {
-                const {id, dayNum,} = v
+                const {dayNum, reminders, setEdit} = v
                 return <CalendarItem
-                            key = {v.id}
-                            dayNum = {v.dayNum}
-                            reminder = {v.todos}
+                            key = {k}
+                            dayNum = {dayNum}
+                            reminder = {reminders}
+                            setEdit = {setEdit}
+                            onSetDay = {onSetDay}
                         />
             })
         }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 
+import ReminderList from '../ReminderList'
+
 import './CalendarItem.css'
 
 const propTypes = {
@@ -19,11 +21,41 @@ const defaultProps = {
 
 class CalendarItem extends Component {
 
+    state = {
+        setEdit: false,
+        discription: '',
+    }
+
+    handleSetEdit = () => {
+        const { setEdit } = this.state
+
+        console.log('#setEdit value:', this.props.dayNum, setEdit);
+        
+
+        this.setState({
+            ...this.state,
+            setEdit: !setEdit
+        })
+    }
+    
+    handleChage = (e) => {
+        const { value } = e.target;
+    
+        this.setState({
+            ...this.state,
+            discription: value,
+        })
+    }
+
     render() {
-        const {dayNum} = this.props
+        const { dayNum } = this.props;
+        const { discription } = this.state;
+        const { handleOnChage, handleSetEdit } = this;
 
         const inDay = (
-            <button>
+            <button
+                onClick = {handleSetEdit}
+            >
                 +
             </button>
         )
@@ -31,18 +63,19 @@ class CalendarItem extends Component {
         const inDayEdit = (
             <input
                 type = 'text'
-                onChange = 
-                value = 
-            >
-            </input>
+                onChange = {handleOnChage}
+                value = {discription}
+            />
         )
 
         return (
             <div className = 'day'>
                 <p>{dayNum}</p>
-                {dayNum !== ''
-                ? (inDay)
-                : null}
+                {(dayNum !== '') ? inDay : null}
+                <ReminderList 
+                    setEdit = {this.state.setEdit}
+                    onChange = {this.handleChage}
+                />
             </div>
         );
     }

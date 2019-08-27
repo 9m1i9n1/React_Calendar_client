@@ -15,6 +15,7 @@ class CalendarListContainer extends Component {
 
     createDay = () => {
         const { year, month } = this.props;
+        const { setDayNum } = this;
 
         const days = [];
 
@@ -33,13 +34,19 @@ class CalendarListContainer extends Component {
             days.push(
                 {
                     dayNum: i,
-                    setEdit: false,
-                    reminder: []
+                    reminders: []
                 }
-            );
+            )
         };
 
         return days;
+    }
+
+    handleAddReminder = () => {
+        this.setState({
+            ...this.state,
+            setDayNum: -1,
+        })
     }
 
     render() {
@@ -47,6 +54,7 @@ class CalendarListContainer extends Component {
             <div>
                 <CalendarList 
                     days = {this.createDay()}
+                    onSetEdit = {this.setEdit}
                     // todos = {this.createTodo()}
                 />
             </div>

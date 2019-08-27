@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 
 class TodoItem extends Component {
     render() {
-        const {reminder, onSetEdit, onRemove} = this.props
+        const {discription, onSetEdit, onRemove} = this.props
 
         return (
             <div>
-                {reminder.description}
+                {console.log(discription)}
+                
+                {discription}
                 <button
-                    onClick = {onSetEdit(reminder)}
+                    // onClick = {onSetEdit(reminder)}
                 >수정</button>
                 <button
-                    onCLick = {onRemove(reminder)}
+                    // onCLick = {onRemove(reminder)}
                 >삭제</button>
             </div>
         );
