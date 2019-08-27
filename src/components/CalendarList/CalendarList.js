@@ -22,10 +22,11 @@ const defaultProps = {
 class CalendarList extends Component {
 
     render() {
-        const {days} = this.props
+        const {days, onChange} = this.props
 
         const mapToComponent = (data) => {
             return data.map((v, k) => {
+                const {id, dayNum,} = v
                 return <CalendarItem
                             key = {v.id}
                             dayNum = {v.dayNum}

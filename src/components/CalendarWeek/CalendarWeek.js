@@ -12,7 +12,7 @@ class CalendarWeek extends Component {
 
         const mapToComponent = (data) => {
             return data.map((v, k) => {
-                return <div className = 'weekday'>{v}</div>
+                return <div className = 'weekday' key = {k}>{v}</div>
             })
         }
 

@@ -19,7 +19,7 @@ const initialState = Map({
 export default handleActions({
     [SET_MONTH]: (state, action) => {
         const { payload: month } = action
-        
+
         return state.set('month', month)
     },
 
@@ -30,41 +30,10 @@ export default handleActions({
     },
 
     [PREV_MONTH]: (state, action) => {
-        return state.updateIn('month', month => month - 1)
+        return state.updateIn(['month'], value => value - 1)
     },
 
     [NEXT_MONTH]: (state, action) => {
-        return state.updateIn('month', month => month + 1)
+        return state.updateIn(['month'], value => value + 1)
     },
 }, initialState)
-
-// export default function calendar(prevState = initialState, action) {
-//     switch (action.type) {
-//         case SETMONTH:
-//             return {
-//                 ...prevState,
-//                 month: action.month,
-//             }
-        
-//         case SETYEAR:
-//             return {
-//                 ...prevState,
-//                 year: action.year,
-//             }
-
-//         case PREVMONTH:
-//             return {
-//                 ...prevState,
-//                 month: prevState.month - 1,
-//             }
-        
-//         case NEXTMONTH:
-//             return {
-//                 ...prevState,
-//                 month: prevState.month + 1,
-//             }
-    
-//         default:
-//             return prevState;
-//     }
-// }

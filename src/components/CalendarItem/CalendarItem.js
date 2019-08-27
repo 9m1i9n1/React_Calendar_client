@@ -20,7 +20,7 @@ const defaultProps = {
 class CalendarItem extends Component {
 
     render() {
-        const {dayNum, onAddReminder} = this.props
+        const {dayNum} = this.props
 
         const inDay = (
             <button>
@@ -28,10 +28,21 @@ class CalendarItem extends Component {
             </button>
         )
 
+        const inDayEdit = (
+            <input
+                type = 'text'
+                onChange = 
+                value = 
+            >
+            </input>
+        )
+
         return (
             <div className = 'day'>
                 <p>{dayNum}</p>
-                {dayNum !== '' ? inDay : null}
+                {dayNum !== ''
+                ? (inDay)
+                : null}
             </div>
         );
     }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Map, List } from 'immutable';
 import CalendarNav from '../components/CalendarNav'
 import { bindActionCreators } from 'redux'
 
@@ -10,7 +9,7 @@ import CalendarWeek from '../components/CalendarWeek';
 
 class CalendarNavContainer extends Component {
     UNSAFE_componentWillMount() {
-        this.setTodayDate()
+        this.setTodayDate();
     }
 
     setTodayDate = () => {
@@ -18,30 +17,30 @@ class CalendarNavContainer extends Component {
         const year = today.getFullYear();
         const month = today.getMonth() + 1;
 
-        console.log('#today:' , today);
-
-        this.setDate(year, month)
+        this.setDate(year, month);
     }
 
     setDate = (year, month) => {
-        const { CalendarActions } = this.props
+        const { CalendarActions } = this.props;
+
+        console.log(month, year);
 
         CalendarActions.setYear(year);
         CalendarActions.setMonth(month);
     }
 
     handlePrevMonth = () => {
-        const { month, year } = this.props
-        const { CalendarActions } = this.props
-
+        const { month, year } = this.props;
+        const { CalendarActions } = this.props;
+        
         ((month - 1) > 0)
         ? CalendarActions.prevMonth()
         : this.setDate(year - 1, 12)
     }
 
     handleNextMonth = () => {
-        const {month, year} = this.props;
-        const { CalendarActions } = this.props
+        const { month, year } = this.props;
+        const { CalendarActions } = this.props;
 
         ((month + 1) < 12)
         ? CalendarActions.nextMonth()
@@ -49,8 +48,8 @@ class CalendarNavContainer extends Component {
     }
 
     render() {
-        const {year, month} = this.props
-        const {handlePrevMonth, handleNextMonth} = this
+        const {year, month} = this.props;
+        const {handlePrevMonth, handleNextMonth} = this;
 
         return (
             <div>
@@ -75,11 +74,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         CalendarActions: bindActionCreators(calendarActions, dispatch),
-
-        // onSetYear: (year) => {dispatch(calendarActions.setYear(year))},
-        // onSetMonth: (month) => {dispatch(calendarActions.setMonth(month))},
-        // onPrevMonth: () => {dispatch(calendarActions.prevMonth())},
-        // onNextMonth: () => {dispatch(calendarActions.nextMonth())},
     }
 }
 
