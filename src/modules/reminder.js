@@ -1,26 +1,27 @@
 import uniqueId from 'uuid/v1'
 
-const ADDREMINDER = 'ADD_REMINDER'
-const EDITREMINDER = 'EDIT_REMINDER'
-const DELETEREMINDER = 'DELETE_REMINDER'
+const ADD_REMINDER = 'ADD_REMINDER'
+const EDIT_REMINDER = 'EDIT_REMINDER'
+const DELETE_REMINDER = 'DELETE_REMINDER'
+
 
 export const addReminder = (reminder) => {
     return {
-        type: ADDREMINDER,
+        type: ADD_REMINDER,
         reminder,
     }
 }
 
 export const editReminder = (reminder) => {
     return {
-        type: EDITREMINDER,
+        type: EDIT_REMINDER,
         reminder,
     }
 }
 
 export const deleteReminder = (id) => {
     return {
-        type: DELETEREMINDER,
+        type: DELETE_REMINDER,
     }
 }
 
@@ -28,17 +29,14 @@ const initialState = {}
 
 export default function reminder(prevState = initialState, action) {
     switch (action.type) {
-        case ADDREMINDER:
+        case ADD_REMINDER:
             const {year, month, dayNum, description} = action.reminder
 
             const reminder = {
-                id: uniqueId(),
-                year: year,
-                month: month,
+                year, month, dayNum, description
             }
 
             return {
-
             }
     
         default:

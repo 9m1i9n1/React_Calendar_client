@@ -1,66 +1,70 @@
-const SETMONTH = "SET_MONTH"
-const SETYEAR = "SET_YEAR"
-const PREVMONTH = "PREV_MONTH"
-const NEXTMONTH = "NEXT_MONTH"
+import { handleActions, createAction } from 'redux-actions';
+import { Map, List } from 'immutable';
 
-export const setMonth = (month) => {
-    return {
-        type: SETMONTH,
-        month,
-    }
-}
+const SET_MONTH = "SET_MONTH"
+const SET_YEAR = "SET_YEAR"
+const PREV_MONTH = "PREV_MONTH"
+const NEXT_MONTH = "NEXT_MONTH"
 
-export const setYear = (year) => {
-    return {
-        type: SETYEAR,
-        year,
-    }
-}
+export const setMonth = createAction(SET_MONTH)
+export const setYear = createAction(SET_YEAR)
+export const prevMonth = createAction(PREV_MONTH)
+export const nextMonth = createAction(NEXT_MONTH)
 
-export const prevMonth = () => {
-    return {
-        type: PREVMONTH,
-    }
-}
-
-export const nextMonth = () => {
-    return {
-        type: NEXTMONTH,
-    }
-}
-
-const initialState = {
+const initialState = Map({
     year: 0,
     month: 0,
-}
+})
 
-export default function calendar(prevState = initialState, action) {
-    switch (action.type) {
-        case SETMONTH:
-            return {
-                ...prevState,
-                month: action.month,
-            }
+export default handleActions({
+    [SET_MONTH]: (state, action) => {
+        const { payload: month } = action
         
-        case SETYEAR:
-            return {
-                ...prevState,
-                year: action.year,
-            }
+        return state.set('month', month)
+    },
 
-        case PREVMONTH:
-            return {
-                ...prevState,
-                month: prevState.month - 1,
-            }
+    [SET_YEAR]: (state, action) => {
+        const { payload: year } = action
+
+        return state.set('year', year)
+    },
+
+    [PREV_MONTH]: (state, action) => {
+        return state.updateIn('month', month => month - 1)
+    },
+
+    [NEXT_MONTH]: (state, action) => {
+        return state.updateIn('month', month => month + 1)
+    },
+}, initialState)
+
+// export default function calendar(prevState = initialState, action) {
+//     switch (action.type) {
+//         case SETMONTH:
+//             return {
+//                 ...prevState,
+//                 month: action.month,
+//             }
         
-        case NEXTMONTH:
-            return {
-                ...prevState,
-                month: prevState.month + 1,
-            }
+//         case SETYEAR:
+//             return {
+//                 ...prevState,
+//                 year: action.year,
+//             }
+
+//         case PREVMONTH:
+//             return {
+//                 ...prevState,
+//                 month: prevState.month - 1,
+//             }
+        
+//         case NEXTMONTH:
+//             return {
+//                 ...prevState,
+//                 month: prevState.month + 1,
+//             }
     
-        default:
-            return prevState;
-    }
-}
+//         default:
+//             return prevState;
+//     }
+// }

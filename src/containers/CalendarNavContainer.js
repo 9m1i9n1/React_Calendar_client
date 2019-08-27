@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Map, List } from 'immutable';
 import CalendarNav from '../components/CalendarNav'
+import { bindActionCreators } from 'redux'
 
 import { connect } from 'react-redux'
 
@@ -16,29 +18,33 @@ class CalendarNavContainer extends Component {
         const year = today.getFullYear();
         const month = today.getMonth() + 1;
 
+        console.log('#today:' , today);
+
         this.setDate(year, month)
     }
 
     setDate = (year, month) => {
-        const { onSetYear, onSetMonth} = this.props
+        const { CalendarActions } = this.props
 
-        onSetYear(year);
-        onSetMonth(month);
+        CalendarActions.setYear(year);
+        CalendarActions.setMonth(month);
     }
 
     handlePrevMonth = () => {
-        const {month, year} = this.props;
+        const { month, year } = this.props
+        const { CalendarActions } = this.props
 
         ((month - 1) > 0)
-        ? this.props.onPrevMonth()
+        ? CalendarActions.prevMonth()
         : this.setDate(year - 1, 12)
     }
 
     handleNextMonth = () => {
         const {month, year} = this.props;
+        const { CalendarActions } = this.props
 
         ((month + 1) < 12)
-        ? this.props.onNextMonth()
+        ? CalendarActions.nextMonth()
         : this.setDate(year + 1, 1)
     }
 
@@ -61,17 +67,19 @@ class CalendarNavContainer extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        year: state.calendar.year,
-        month: state.calendar.month,
+        year: state.calendar.get('year'),
+        month: state.calendar.get('month'),
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSetYear: (year) => {dispatch(calendarActions.setYear(year))},
-        onSetMonth: (month) => {dispatch(calendarActions.setMonth(month))},
-        onPrevMonth: () => {dispatch(calendarActions.prevMonth())},
-        onNextMonth: () => {dispatch(calendarActions.nextMonth())},
+        CalendarActions: bindActionCreators(calendarActions, dispatch),
+
+        // onSetYear: (year) => {dispatch(calendarActions.setYear(year))},
+        // onSetMonth: (month) => {dispatch(calendarActions.setMonth(month))},
+        // onPrevMonth: () => {dispatch(calendarActions.prevMonth())},
+        // onNextMonth: () => {dispatch(calendarActions.nextMonth())},
     }
 }
 
