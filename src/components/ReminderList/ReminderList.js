@@ -28,12 +28,14 @@ class ReminderList extends Component {
     }
 
     render() {
-        const { setEdit } = this.props
+        const { setEdit, onSetEdit } = this.props
 
         const reminderForm = () => {
             console.log('#in reminderForm func');
             
-            return <ReminderForm />
+            return <ReminderForm 
+                onSetEdit = {onSetEdit}
+            />
         }
 
         const mapToComponent = (data) => {

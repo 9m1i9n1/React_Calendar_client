@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 
 class ReminderForm extends Component {
     render() {
-        // const {discription, onUpdate, onSetEdit} = this.props
+        const {onSetEdit} = this.props
 
         console.log('#in reminderform');
         
         return (
-            <form
-                method = 'post'
+            <div
                 // onSubmit = {(e) => onUpdate(e, reminder)}
             >
                 <input
@@ -17,11 +16,11 @@ class ReminderForm extends Component {
                 />
                 <button>수정</button>
                 <button
-                    // onClick = {() => onSetEdit(false)}
+                    onClick = {() => onSetEdit()}
                 >
                     취소
                 </button>
-            </form>
+            </div>
         );
     }
 }

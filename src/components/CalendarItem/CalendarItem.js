@@ -29,9 +29,6 @@ class CalendarItem extends Component {
     handleSetEdit = () => {
         const { setEdit } = this.state
 
-        console.log('#setEdit value:', this.props.dayNum, setEdit);
-        
-
         this.setState({
             ...this.state,
             setEdit: !setEdit
@@ -74,6 +71,7 @@ class CalendarItem extends Component {
                 {(dayNum !== '') ? inDay : null}
                 <ReminderList 
                     setEdit = {this.state.setEdit}
+                    onSetEdit = {this.handleSetEdit}
                     onChange = {this.handleChage}
                 />
             </div>
