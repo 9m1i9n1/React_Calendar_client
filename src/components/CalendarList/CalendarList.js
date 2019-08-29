@@ -24,14 +24,15 @@ class CalendarList extends Component {
     render() {
         const {days, onSetDay} = this.props
 
+        console.error('#calendarList');
+        
+
         const mapToComponent = (data) => {
             return data.map((v, k) => {
-                const {dayNum, reminders, setEdit} = v
                 return <CalendarItem
                             key = {k}
-                            dayNum = {dayNum}
-                            reminder = {reminders}
-                            setEdit = {setEdit}
+                            dayNum = {v.get('dayNum')}
+                            reminders = {v.get('reminders')}
                             onSetDay = {onSetDay}
                         />
             })

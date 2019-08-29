@@ -6,11 +6,16 @@ import CalendarList from '../components/CalendarList';
 import { bindActionCreators } from 'redux';
 import * as reminderActions from '../modules/reminder'
 
+import { Map, List, Seq } from 'immutable';
+
 class CalendarListContainer extends Component {
-    initialize = async () => {
+    handleGetReminder = async () => {
         const { ReminderActions, year, month } = this.props;
         try{
+            console.error('#1');
+            
             await ReminderActions.getReminder(year, month);
+            await this.createDay()
         }
         catch(e) {
             console.log(e);
@@ -24,18 +29,16 @@ class CalendarListContainer extends Component {
         }
         catch(e) {
             console.log(e);
-            
         }
     }
     
     componentDidMount() {
-        this.initialize();
-        this.createDay();
+        this.handleGetReminder();
     }
     
-    componentDidUpdate() {
-        this.createDay();
-    }
+    // componentDidUpdate() {
+    //     this.createDay();
+    // }
 
     createDay = () => {
         const { year, month } = this.props;
@@ -47,18 +50,30 @@ class CalendarListContainer extends Component {
 
         for(let i = 0; i < firstDay; i++) {
             days.push(
-                {
+                Map({
                     dayNum: '',
-                }
+                    reminders: List([])
+                })
             );
         };
 
+        const DBreminder = this.props.reminders.toJS();
+
         for(let i = 1; i <= dayInMonth; i++) {
+            
+            const filteredlist = DBreminder.filter((value) => value.dayNum === i);
+
+            const temp = filteredlist.map(value => Seq(value));
+
+            console.log('#temp', i, temp);
+
             days.push(
-                {
+                Map({
                     dayNum: i,
-                    reminders: []
-                }
+                    reminders: List([
+                        ...temp,
+                    ])
+                })
             )
         };
 
@@ -68,14 +83,15 @@ class CalendarListContainer extends Component {
     render() {
         const { loading, reminders } = this.props;
 
+        // console.log('# container:', reminders);
+        
+
         if(loading) return null;
         
         return (
             <div>
                 <CalendarList 
                     days = {this.createDay()}
-                    onSetEdit = {this.setEdit}
-                    // todos = {this.createTodo()}
                 />
             </div>
         );

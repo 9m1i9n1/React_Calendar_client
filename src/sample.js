@@ -27,3 +27,10 @@ console.log('#state:', state);
 
 console.log(state.get('reminders'));
 
+// let state = Map({
+//     setEdit: false,
+// })
+
+// const t3 = state.updateIn(['setEdit'], (value) => !value)
+
+// console.log(t3);

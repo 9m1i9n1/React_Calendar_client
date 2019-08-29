@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
+import { Map, List } from 'immutable';
+
 import ReminderItem from '../ReminderItem';
 import ReminderForm from '../ReminderForm';
 
@@ -16,24 +18,36 @@ function createError(funcName) {
 const defaultProps = {
     reminders: createError('reminders'),
 }
-
 class ReminderList extends Component {
+    // shouldComponentUpdate(nextProps, nextState){
+    //     if(nextProps.setEdit === this.props.setEdit) {
+    //         return false;
+    //     }
+    //     return true;
+    // }
+
     state = {
         text: '',
-        reminders: [
-            // {
-            //     discription: '안녕하세요'
-            // },
-        ]
+        reminders: this.props.reminders
+    }
+
+    handleChange = (e) => {
+        this.setState({
+            ...this.state,
+            text: e.target.value,
+        })
     }
 
     render() {
         const { setEdit, onSetEdit } = this.props
 
+        console.log('#reminderList', this.props.dayNum, this.props.reminders);
+        
+
         const reminderForm = () => {
-            console.log('#in reminderForm func');
-            
             return <ReminderForm 
+                // onSubmit = {handle}
+                onChange = {this.handleChange}
                 onSetEdit = {onSetEdit}
             />
         }
@@ -48,6 +62,7 @@ class ReminderList extends Component {
                 />
             })
         }
+
         return (
             <div>
                 {(setEdit === true)

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
+import { Map, List } from 'immutable';
 
 import ReminderList from '../ReminderList'
 
@@ -20,10 +21,16 @@ const defaultProps = {
 }
 
 class CalendarItem extends Component {
+    // shouldComponentUpdate(nextProps, nextState){
+    //     if(nextState.setEdit === this.state.setEdit) {
+    //         return false;
+    //     }
+    //     return true;
+    // }
 
     state = {
         setEdit: false,
-        discription: '',
+        reminders: this.props.reminders.toJS(),
     }
 
     handleSetEdit = () => {
@@ -31,11 +38,11 @@ class CalendarItem extends Component {
 
         this.setState({
             ...this.state,
-            setEdit: !setEdit
+            setEdit: !setEdit,
         })
     }
     
-    handleChage = (e) => {
+    handleOnChange = (e) => {
         const { value } = e.target;
     
         this.setState({
@@ -44,36 +51,32 @@ class CalendarItem extends Component {
         })
     }
 
+
     render() {
         const { dayNum } = this.props;
-        const { discription } = this.state;
-        const { handleOnChage, handleSetEdit } = this;
+        const { setEdit, reminders } = this.state;
+        const { handleOnChange, handleSetEdit } = this;
 
-        const inDay = (
-            <button
-                onClick = {handleSetEdit}
-            >
-                +
-            </button>
-        )
-
-        const inDayEdit = (
-            <input
-                type = 'text'
-                onChange = {handleOnChage}
-                value = {discription}
-            />
-        )
+        console.log('#calendarItem', dayNum, this.state.reminders);
 
         return (
             <div className = 'day'>
                 <p>{dayNum}</p>
-                {(dayNum !== '') ? inDay : null}
+                {(dayNum !== '') 
+                ?
+                (<div>
+                <button onClick = {handleSetEdit}>
+                    +
+                </button>
                 <ReminderList 
-                    setEdit = {this.state.setEdit}
-                    onSetEdit = {this.handleSetEdit}
-                    onChange = {this.handleChage}
+                    dayNum = {dayNum}
+                    reminders = {reminders}
+                    setEdit = {setEdit}
+                    onSetEdit = {handleSetEdit}
+                    onChange = {handleOnChange}
                 />
+                </div>)
+                : null}
             </div>
         );
     }

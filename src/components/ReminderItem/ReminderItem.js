@@ -7,7 +7,6 @@ class TodoItem extends Component {
         return (
             <div>
                 {console.log(discription)}
-                
                 {discription}
                 <button
                     // onClick = {onSetEdit(reminder)}
