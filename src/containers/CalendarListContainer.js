@@ -6,14 +6,10 @@ import CalendarList from '../components/CalendarList';
 import { bindActionCreators } from 'redux';
 import * as reminderActions from '../modules/reminder'
 
-import { Map, List, Seq } from 'immutable';
-
 class CalendarListContainer extends Component {
     handleGetReminder = async () => {
         const { ReminderActions, year, month } = this.props;
         try{
-            console.error('#1');
-            
             await ReminderActions.getReminder(year, month);
             await this.createDay()
         }
@@ -26,6 +22,18 @@ class CalendarListContainer extends Component {
         const { ReminderActions, year, month } = this.props;
         try{
             await ReminderActions.addReminder(year, month, daynum, discription);
+            await this.handleGetReminder();
+        }
+        catch(e) {
+            console.log(e);
+        }
+    }
+
+    handleRemoveReminder = async (id) => {
+        const { ReminderActions } = this.props;
+        try {
+            await ReminderActions.removeReminder(id);
+            await this.handleGetReminder();
         }
         catch(e) {
             console.log(e);
@@ -36,9 +44,11 @@ class CalendarListContainer extends Component {
         this.handleGetReminder();
     }
     
-    // componentDidUpdate() {
-    //     this.createDay();
-    // }
+    componentDidUpdate(prevProps, prevState) {
+        if((this.props.reminders === prevProps.reminders) && (this.props.loading !== prevProps.loading) && (prevProps.loading !== 'undefined')) {
+            this.handleGetReminder();
+        }
+    }
 
     createDay = () => {
         const { year, month } = this.props;
@@ -50,10 +60,10 @@ class CalendarListContainer extends Component {
 
         for(let i = 0; i < firstDay; i++) {
             days.push(
-                Map({
+                {
                     dayNum: '',
-                    reminders: List([])
-                })
+                    reminders: []
+                }
             );
         };
 
@@ -63,35 +73,31 @@ class CalendarListContainer extends Component {
             
             const filteredlist = DBreminder.filter((value) => value.dayNum === i);
 
-            const temp = filteredlist.map(value => Seq(value));
-
-            console.log('#temp', i, temp);
-
             days.push(
-                Map({
+                {
                     dayNum: i,
-                    reminders: List([
-                        ...temp,
-                    ])
-                })
+                    reminders: filteredlist,
+                }
             )
         };
-
+        
         return days;
     }
 
     render() {
-        const { loading, reminders } = this.props;
+        const { loading } = this.props;
 
-        // console.log('# container:', reminders);
-        
+        console.warn('CalendarListContainer render');
+        console.log("#loading", loading);
 
         if(loading) return null;
-        
+
         return (
             <div>
                 <CalendarList 
                     days = {this.createDay()}
+                    onAddReminder = {this.handleAddReminder}
+                    onRemoveReminder = {this.handleRemoveReminder}
                 />
             </div>
         );
@@ -103,7 +109,7 @@ const mapStateToProps = (state) => {
         year: state.calendar.get('year'),
         month: state.calendar.get('month'),
         reminders: state.reminder.get('reminders'),
-        loading: state.pender.pending['reminder/GET_REMINDER'],
+        loading: state.pender.pending['GET_REMINDER'],
     }
 }
 

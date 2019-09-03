@@ -2,19 +2,20 @@ import React, { Component } from 'react';
 
 class ReminderForm extends Component {
     render() {
-        const {onSetEdit} = this.props
-
-        console.log('#in reminderform');
+        const {onSetEdit, onChange, onSubmit, discription} = this.props
         
         return (
             <div
                 // onSubmit = {(e) => onUpdate(e, reminder)}
             >
                 <input
-                    // type = 'text'
-                    // value = {discription}
+                    type = 'text'
+                    value = {discription}
+                    onChange = {onChange}
                 />
-                <button>수정</button>
+                <button
+                    onClick = {() => onSubmit()}
+                >등록</button>
                 <button
                     onClick = {() => onSetEdit()}
                 >

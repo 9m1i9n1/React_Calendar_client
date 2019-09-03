@@ -21,16 +21,16 @@ const defaultProps = {
 }
 
 class CalendarItem extends Component {
-    // shouldComponentUpdate(nextProps, nextState){
-    //     if(nextState.setEdit === this.state.setEdit) {
-    //         return false;
-    //     }
-    //     return true;
-    // }
+    shouldComponentUpdate(nextProps, nextState){
+        if(nextState.setEdit === this.state.setEdit && nextProps.reminders === this.props.reminders) {
+            return false;
+        }
+        return true;
+    }
 
     state = {
         setEdit: false,
-        reminders: this.props.reminders.toJS(),
+        discription: '',
     }
 
     handleSetEdit = () => {
@@ -39,6 +39,7 @@ class CalendarItem extends Component {
         this.setState({
             ...this.state,
             setEdit: !setEdit,
+            discription: '',
         })
     }
     
@@ -51,13 +52,18 @@ class CalendarItem extends Component {
         })
     }
 
+    handleAddReminder = () => {
+        const {dayNum, onAddReminder} = this.props
+        const {discription} = this.state
+
+        onAddReminder(dayNum, discription);
+        this.handleSetEdit();
+    }
 
     render() {
-        const { dayNum } = this.props;
-        const { setEdit, reminders } = this.state;
-        const { handleOnChange, handleSetEdit } = this;
-
-        console.log('#calendarItem', dayNum, this.state.reminders);
+        const { dayNum, id, reminders, onRemoveReminder } = this.props;
+        const { setEdit } = this.state;
+        const { handleOnChange, handleSetEdit, handleAddReminder } = this;
 
         return (
             <div className = 'day'>
@@ -74,6 +80,8 @@ class CalendarItem extends Component {
                     setEdit = {setEdit}
                     onSetEdit = {handleSetEdit}
                     onChange = {handleOnChange}
+                    onRemoveReminder = {onRemoveReminder}
+                    onAddReminder = {handleAddReminder}
                 />
                 </div>)
                 : null}

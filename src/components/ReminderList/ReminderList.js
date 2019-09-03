@@ -26,28 +26,13 @@ class ReminderList extends Component {
     //     return true;
     // }
 
-    state = {
-        text: '',
-        reminders: this.props.reminders
-    }
-
-    handleChange = (e) => {
-        this.setState({
-            ...this.state,
-            text: e.target.value,
-        })
-    }
-
     render() {
-        const { setEdit, onSetEdit } = this.props
-
-        console.log('#reminderList', this.props.dayNum, this.props.reminders);
-        
+        const { setEdit, onSetEdit, onChange, onAddReminder, onRemoveReminder } = this.props
 
         const reminderForm = () => {
             return <ReminderForm 
-                // onSubmit = {handle}
-                onChange = {this.handleChange}
+                onSubmit = {onAddReminder}
+                onChange = {onChange}
                 onSetEdit = {onSetEdit}
             />
         }
@@ -56,9 +41,10 @@ class ReminderList extends Component {
             return data.map((v, k) => {
                 return <ReminderItem 
                     key = {k}
+                    id = {v._id}
                     discription = {v.discription}
-                    // onUpdate = {}
-                    // onDelete = {}
+                    onChange = {this.handleChange}
+                    onRemove = {onRemoveReminder}
                 />
             })
         }
@@ -66,7 +52,7 @@ class ReminderList extends Component {
         return (
             <div>
                 {(setEdit === true)
-                ? reminderForm() : mapToComponent(this.state.reminders)}
+                ? reminderForm() : mapToComponent(this.props.reminders)}
             </div>
         );
     }
