@@ -1,1 +1,1 @@
-# BIT_Calendar_redux
+# BIT_Calendar_client
